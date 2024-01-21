@@ -8,7 +8,7 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
 
   async save (search: SaveSearchRepository.Params[]): Promise<SaveSearchRepository.Result[]> {
     const musicsOnDB = await this.prismaClient.music.findMany()
-    const results = []
+    const results: SaveSearchRepository.Result[] = []
     const searchRefatored = search.map((music) => {
       const genre = Genre[music.genre as keyof typeof Genre] ? music.genre as keyof typeof Genre : 'OUTROS'
       return {
@@ -26,7 +26,18 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
       const musics = await this.prismaClient.music.create({
         data: result
       })
-      results.push(musics)
+      results.push(
+        {
+          title: musics.title,
+          artist: musics.artist,
+          album: musics.album,
+          year: musics.year,
+          genre: musics.genre,
+          createdAt: musics.createdAt,
+          id: musics.id,
+          updatedAt: musics.updatedAt
+        }
+      )
     }
     return results
   }
