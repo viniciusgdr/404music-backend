@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events'
 import { type LoadPlayerPairProcessDownloadRepository } from '../../data/protocols/LoadPlayerPairProcessDownloadRepository'
 import ytdl from 'ytdl-core'
 
@@ -31,4 +32,4 @@ export class YoutubeDownloadRepository implements LoadPlayerPairProcessDownloadR
     })
     return Buffer.concat(buffer)
   }
-}
+};
