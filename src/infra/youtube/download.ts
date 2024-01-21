@@ -33,16 +33,3 @@ export class YoutubeDownloadRepository implements LoadPlayerPairProcessDownloadR
     return Buffer.concat(buffer)
   }
 };
-
-void (async () => {
-  const youtubeDownloadRepository = new YoutubeDownloadRepository()
-  const eventEmitter = new EventEmitter()
-  const buffer = await youtubeDownloadRepository.load({
-    id: 'https://youtube.com/watch?v=e7DdNYBpvok',
-    eventEmitter
-  })
-  eventEmitter.on('data', (data) => {
-    console.log(data)
-  })
-  console.log(buffer)
-})()
