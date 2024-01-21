@@ -5,5 +5,7 @@ export interface PlayerPairProcessDownload {
 export namespace PlayerPairProcessDownload {
   export interface Params {
     id: string
+    initialChunk: number
+    finalChunk?: number
   }
 }

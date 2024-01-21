@@ -29,13 +29,16 @@ export class LoadPlayerPairProcessDownload implements PlayerPairProcessDownload 
     if (exists) {
       await this.loadLocalPlayerPairProcessDownloadRepository.load({
         eventEmitter: this.eventEmitter,
-        id: download.id
+        id: download.id,
+        initialChunk: download.initialChunk,
+        finalChunk: download.finalChunk
       })
       return
     }
     const buffer = await this.loadPlayerPairProcessDownloadRepository.load({
       eventEmitter: this.eventEmitter,
-      id: music.partnerId
+      id: music.partnerId,
+      initialChunk: 0
     })
     await this.saveLocalPlayerPairProcessDownloadRepository.save({
       buffer,

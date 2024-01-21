@@ -8,5 +8,7 @@ export namespace LoadPlayerPairProcessDownloadRepository {
   export interface Params {
     id: string
     eventEmitter: EventEmitter
+    initialChunk: number
+    finalChunk?: number
   }
 }
