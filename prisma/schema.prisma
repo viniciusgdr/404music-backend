@@ -10,14 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum AccountMethod {
+  GOOGLE
+}
+
 model User {
-  id        String     @id @default(cuid())
-  email     String     @unique
-  name      String
-  password  String
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  playlists Playlist[]
+  id            String        @id @default(cuid())
+  email         String        @unique
+  name          String
+  password      String
+  imageUrl      String        @default("") @map("image_url")
+  accountMethod AccountMethod @map("account_method")
+  userId        String        @map("user_id")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  playlists     Playlist[]
 }
 
 enum PlaylistType {
@@ -26,26 +33,26 @@ enum PlaylistType {
 }
 
 model Playlist {
-  id          String       @id @default(cuid())
+  id          String          @id @default(cuid())
   title       String
-  description String       @default("")
-  thumbnail   String       @default("")
-  userId      String       @map("user_id")
+  description String          @default("")
+  thumbnail   String          @default("")
+  userId      String          @map("user_id")
   type        PlaylistType
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
-  user        User         @relation(fields: [userId], references: [id])
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
+  user        User            @relation(fields: [userId], references: [id])
   musics      PlaylistMusic[]
 }
 
 model PlaylistMusic {
-  id          String   @id @default(cuid())
-  playlistId  String   @map("playlist_id")
-  musicId     String   @map("music_id")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  playlist    Playlist @relation(fields: [playlistId], references: [id])
-  music       Music    @relation(fields: [musicId], references: [id])
+  id         String   @id @default(cuid())
+  playlistId String   @map("playlist_id")
+  musicId    String   @map("music_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  music      Music    @relation(fields: [musicId], references: [id])
 }
 
 enum Genre {
@@ -69,15 +76,15 @@ enum Genre {
 }
 
 model Music {
-  id        String   @id @default(cuid())
-  partnerId String   @map("partner_id")
+  id        String          @id @default(cuid())
+  partnerId String          @map("partner_id")
   title     String
   artist    String
   album     String
   year      Int
   thumbnail String
   genre     Genre
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime        @default(now()) @map("created_at")
+  updatedAt DateTime        @updatedAt @map("updated_at")
   playlists PlaylistMusic[]
 }
