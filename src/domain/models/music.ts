@@ -6,5 +6,6 @@ export interface Music {
   year: number
   genre: string
   createdAt: Date
+  thumbnail: string
   updatedAt: Date
 }

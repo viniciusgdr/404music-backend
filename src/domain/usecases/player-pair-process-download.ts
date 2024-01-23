@@ -1,11 +1,16 @@
+import type fs from 'fs'
+import type internal from 'stream'
+
 export interface PlayerPairProcessDownload {
-  download: (download: PlayerPairProcessDownload.Params) => Promise<void>
+  download: (download: PlayerPairProcessDownload.Params) => Promise<PlayerPairProcessDownload.Result>
 }
 
 export namespace PlayerPairProcessDownload {
   export interface Params {
     id: string
-    initialChunk: number
-    finalChunk?: number
+  }
+  export interface Result {
+    stream: fs.ReadStream | internal.Readable
+    size: number
   }
 }

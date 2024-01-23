@@ -8,5 +8,5 @@ export namespace LoadMusicsLatestRepository {
   export interface Params {
     limit: number
   }
-  export type Result = Music[]
+  export type Result = Array<Omit<Music, 'partnerId'>>
 }

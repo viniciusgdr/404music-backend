@@ -5,5 +5,5 @@ export interface MusicLatest {
 }
 
 export namespace MusicLatest {
-  export type Result = Music[]
+  export type Result = Array<Omit<Music, 'partnerId'>>
 }

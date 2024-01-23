@@ -1,7 +1,7 @@
 import { type Music } from '../../domain/models/music'
 
 export interface SaveSearchRepository {
-  save: (search: SaveSearchRepository.Params[]) => Promise<SaveSearchRepository.Result[]>
+  save: (search: SaveSearchRepository.Params[], query: string) => Promise<SaveSearchRepository.Result[]>
 }
 
 export namespace SaveSearchRepository {

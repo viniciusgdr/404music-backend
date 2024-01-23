@@ -1,22 +1,17 @@
-import EventEmitter from 'events'
 import { type PlayerPairProcessDownload } from '../../../domain/usecases/player-pair-process-download'
 import { type LoadPlayerPairProcessDownloadRepository } from '../../protocols/LoadPlayerPairProcessDownloadRepository'
 import { type CheckLocalPlayerPairProcessDownloadRepository } from '../../protocols/CheckLocalPlayerPairProcessDownloadRepository'
-import { type SaveLocalPlayerPairProcessDownloadRepository } from '../../protocols/SaveLocalPlayerPairProcessDownloadRepository'
 import { type LoadMusicByIdRepository } from '../../protocols/LoadMusicByIdRepository'
 
 export class LoadPlayerPairProcessDownload implements PlayerPairProcessDownload {
-  eventEmitter: EventEmitter = new EventEmitter()
-
   constructor (
     private readonly checkLocalPlayerPairProcessDownloadRepository: CheckLocalPlayerPairProcessDownloadRepository,
     private readonly loadLocalPlayerPairProcessDownloadRepository: LoadPlayerPairProcessDownloadRepository,
     private readonly loadMusicByIdRepository: LoadMusicByIdRepository,
-    private readonly loadPlayerPairProcessDownloadRepository: LoadPlayerPairProcessDownloadRepository,
-    private readonly saveLocalPlayerPairProcessDownloadRepository: SaveLocalPlayerPairProcessDownloadRepository
+    private readonly loadPlayerPairProcessDownloadRepository: LoadPlayerPairProcessDownloadRepository
   ) {}
 
-  async download (download: PlayerPairProcessDownload.Params): Promise<void> {
+  async download (download: PlayerPairProcessDownload.Params): Promise<PlayerPairProcessDownload.Result> {
     const music = await this.loadMusicByIdRepository.load({
       id: download.id
     })
@@ -27,22 +22,14 @@ export class LoadPlayerPairProcessDownload implements PlayerPairProcessDownload 
       id: download.id
     })
     if (exists) {
-      await this.loadLocalPlayerPairProcessDownloadRepository.load({
-        eventEmitter: this.eventEmitter,
-        id: download.id,
-        initialChunk: download.initialChunk,
-        finalChunk: download.finalChunk
+      const result = await this.loadLocalPlayerPairProcessDownloadRepository.load({
+        id: download.id
       })
-      return
+      return result
     }
-    const buffer = await this.loadPlayerPairProcessDownloadRepository.load({
-      eventEmitter: this.eventEmitter,
-      id: music.partnerId,
-      initialChunk: 0
+    const result = await this.loadPlayerPairProcessDownloadRepository.load({
+      id: music.partnerId
     })
-    await this.saveLocalPlayerPairProcessDownloadRepository.save({
-      buffer,
-      id: download.id
-    })
+    return result
   }
 }

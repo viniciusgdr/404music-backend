@@ -21,8 +21,38 @@ export class DbSearch implements Search {
       take: take ?? 20,
       skip: skip ?? 0
     })
-    const savedContents = await this.saveSearchRepository.save(result)
-    await this.cacheRepository.set(`search:${query}:${skip ?? 0}:${take ?? 20}`, JSON.stringify(savedContents), 60 * 60 * 24)
+    let savedContents = await this.saveSearchRepository.save(result, query)
+    if (savedContents.length > 0) {
+      await this.cacheRepository.set(`search:${query}:${skip ?? 0}:${take ?? 20}`, JSON.stringify(savedContents), 60 * 60 * 24)
+    }
+
+    savedContents = savedContents.sort((a, b) => {
+      const splitedTitleA = a.title.split(' ')
+      const splitedTitleB = b.title.split(' ')
+      const splitedArtistA = a.artist.split(' ')
+      const splitedArtistB = b.artist.split(' ')
+
+      if (query.startsWith(a.artist) || query.startsWith(a.title)) {
+        return -1
+      }
+      if (query.startsWith(b.artist) || query.startsWith(b.title)) {
+        return 1
+      }
+      if (splitedTitleA.length > splitedTitleB.length) {
+        return -1
+      }
+      if (splitedTitleA.length < splitedTitleB.length) {
+        return 1
+      }
+      if (splitedArtistA.length > splitedArtistB.length) {
+        return -1
+      }
+      if (splitedArtistA.length < splitedArtistB.length) {
+        return 1
+      }
+      return 0
+    })
+    savedContents = savedContents.filter((item, index, self) => self.findIndex((i) => i.title === item.title && i.artist === item.artist) === index)
     return savedContents
   }
 }

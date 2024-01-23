@@ -6,7 +6,7 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
     private readonly prismaClient: PrismaClient
   ) { }
 
-  async save (search: SaveSearchRepository.Params[]): Promise<SaveSearchRepository.Result[]> {
+  async save (search: SaveSearchRepository.Params[], query: string): Promise<SaveSearchRepository.Result[]> {
     const musicsOnDB = await this.prismaClient.music.findMany()
     const results: SaveSearchRepository.Result[] = []
     const searchRefatored = search.map((music) => {
@@ -35,10 +35,38 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
           genre: musics.genre,
           createdAt: musics.createdAt,
           id: musics.id,
-          updatedAt: musics.updatedAt
+          updatedAt: musics.updatedAt,
+          thumbnail: musics.thumbnail
         }
       )
     }
+    const resultsAlreadyInDB = search.filter((music) => musicsOnDB.find((musicOnDB) => musicOnDB.partnerId === music.partnerId))
+    for (const result of resultsAlreadyInDB) {
+      const dbContent = musicsOnDB.find((musicOnDB) => musicOnDB.partnerId === result.partnerId)
+      if (!dbContent) {
+        continue
+      }
+      results.push(
+        {
+          title: dbContent.title,
+          artist: dbContent.artist,
+          album: dbContent.album,
+          year: dbContent.year,
+          genre: dbContent.genre,
+          createdAt: dbContent.createdAt,
+          id: dbContent.id,
+          updatedAt: dbContent.updatedAt,
+          thumbnail: dbContent.thumbnail
+        }
+      )
+    }
+    const resultsMatchesWithQuery = results.filter((music) => {
+      const titleSplited = music.title.split(' ')
+      const querySplited = query.split(' ')
+      const matches = titleSplited.filter((word) => querySplited.includes(word))
+      return matches.length > 0
+    })
+    results.push(...resultsMatchesWithQuery)
     return results
   }
 }

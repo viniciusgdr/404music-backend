@@ -12,7 +12,7 @@ export class SearchController implements Controller {
       return badRequest(new MissingParamError('query'))
     }
     const result = await this.search.search({
-      query,
+      query: decodeURIComponent(query),
       skip: skip || null,
       take: take || 20
     })

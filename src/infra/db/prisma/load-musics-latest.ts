@@ -11,6 +11,17 @@ export class LoadMusicsLatestPrismaRepository implements LoadMusicsLatestReposit
       take: params.limit,
       orderBy: {
         createdAt: 'asc'
+      },
+      select: {
+        id: true,
+        title: true,
+        artist: true,
+        album: true,
+        createdAt: true,
+        genre: true,
+        updatedAt: true,
+        year: true,
+        thumbnail: true
       }
     })
     return musics

@@ -1,14 +1,16 @@
-import { type EventEmitter } from 'node:events'
+import type fs from 'fs'
+import type internal from 'stream'
 
 export interface LoadPlayerPairProcessDownloadRepository {
-  load: (load: LoadPlayerPairProcessDownloadRepository.Params) => Promise<Buffer>
+  load: (load: LoadPlayerPairProcessDownloadRepository.Params) => Promise<LoadPlayerPairProcessDownloadRepository.Result>
 }
 
 export namespace LoadPlayerPairProcessDownloadRepository {
   export interface Params {
     id: string
-    eventEmitter: EventEmitter
-    initialChunk: number
-    finalChunk?: number
+  }
+  export interface Result {
+    stream: fs.ReadStream | internal.Readable
+    size: number
   }
 }
