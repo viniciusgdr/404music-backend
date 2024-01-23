@@ -22,31 +22,15 @@ export class DbSearch implements Search {
       skip: skip ?? 0
     })
     let savedContents = await this.saveSearchRepository.save(result, query)
+    // sort by title matches
     savedContents = savedContents.sort((a, b) => {
-      const splitedTitleA = a.title.split(' ')
-      const splitedTitleB = b.title.split(' ')
-      const splitedArtistA = a.artist.split(' ')
-      const splitedArtistB = b.artist.split(' ')
-
-      if (query.startsWith(a.artist) || query.startsWith(a.title)) {
-        return -1
-      }
-      if (query.startsWith(b.artist) || query.startsWith(b.title)) {
-        return 1
-      }
-      if (splitedTitleA.length > splitedTitleB.length) {
-        return -1
-      }
-      if (splitedTitleA.length < splitedTitleB.length) {
-        return 1
-      }
-      if (splitedArtistA.length > splitedArtistB.length) {
-        return -1
-      }
-      if (splitedArtistA.length < splitedArtistB.length) {
-        return 1
-      }
-      return 0
+      const aTitle = a.title.toLowerCase()
+      const bTitle = b.title.toLowerCase()
+      const aQuery = query.toLowerCase()
+      const bQuery = query.toLowerCase()
+      const aTitleMatches = aTitle.match(new RegExp(aQuery, 'g'))?.length ?? 0
+      const bTitleMatches = bTitle.match(new RegExp(bQuery, 'g'))?.length ?? 0
+      return bTitleMatches - aTitleMatches
     })
     savedContents = savedContents.filter((item, index, self) => self.findIndex((i) => i.id === item.id) === index)
     if (savedContents.length > 0) {
