@@ -8,7 +8,9 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
 
   async save (search: SaveSearchRepository.Params[], query: string): Promise<SaveSearchRepository.Result[]> {
     const musicsOnDB = await this.prismaClient.music.findMany()
-    const results: SaveSearchRepository.Result[] = []
+    const results: Array<SaveSearchRepository.Result & {
+      likesOnPartnerId: number
+    }> = []
     const searchRefatored = search.map((music) => {
       const genre = Genre[music.genre as keyof typeof Genre] ? music.genre as keyof typeof Genre : 'OUTROS'
       return {
@@ -18,7 +20,8 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
         album: music.album,
         year: music.year,
         genre,
-        thumbnail: music.thumbnail
+        thumbnail: music.thumbnail,
+        likesOnPartnerId: music.likes
       }
     }).filter((music) => !musicsOnDB.find((musicOnDB) => musicOnDB.partnerId === music.partnerId))
 
@@ -36,7 +39,8 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
           createdAt: musics.createdAt,
           id: musics.id,
           updatedAt: musics.updatedAt,
-          thumbnail: musics.thumbnail
+          thumbnail: musics.thumbnail,
+          likesOnPartnerId: musics.likesOnPartnerId
         }
       )
     }
@@ -56,7 +60,8 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
           createdAt: dbContent.createdAt,
           id: dbContent.id,
           updatedAt: dbContent.updatedAt,
-          thumbnail: dbContent.thumbnail
+          thumbnail: dbContent.thumbnail,
+          likesOnPartnerId: dbContent.likesOnPartnerId
         }
       )
     }
@@ -67,6 +72,19 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
       return matches.length > 0
     })
     results.push(...resultsMatchesWithQuery)
-    return results
+    const resultFinal: SaveSearchRepository.Result[] = results.sort((a, b) => {
+      if (a.likesOnPartnerId > b.likesOnPartnerId) {
+        return -1
+      }
+      if (a.likesOnPartnerId < b.likesOnPartnerId) {
+        return 1
+      }
+      return 0
+    }).map(item => {
+      const { likesOnPartnerId, ...rest } = item
+      return rest
+    })
+
+    return resultFinal
   }
 }

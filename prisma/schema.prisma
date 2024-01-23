@@ -78,6 +78,7 @@ enum Genre {
 model Music {
   id        String          @id @default(cuid())
   partnerId String          @map("partner_id")
+  likesOnPartnerId Int      @map("likes_on_partner_id") @default(0)
   title     String
   artist    String
   album     String

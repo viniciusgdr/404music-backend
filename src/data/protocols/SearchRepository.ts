@@ -17,5 +17,6 @@ export namespace SearchRepository {
     year: number
     thumbnail: string
     genre: string
+    likes: number
   }
 }

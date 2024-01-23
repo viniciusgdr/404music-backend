@@ -13,6 +13,7 @@ export namespace SaveSearchRepository {
     year: number
     thumbnail: string
     genre: string
+    likes: number
   }
   export type Result = Music
 }

@@ -22,10 +22,6 @@ export class DbSearch implements Search {
       skip: skip ?? 0
     })
     let savedContents = await this.saveSearchRepository.save(result, query)
-    if (savedContents.length > 0) {
-      await this.cacheRepository.set(`search:${query}:${skip ?? 0}:${take ?? 20}`, JSON.stringify(savedContents), 60 * 60 * 24)
-    }
-
     savedContents = savedContents.sort((a, b) => {
       const splitedTitleA = a.title.split(' ')
       const splitedTitleB = b.title.split(' ')
@@ -52,7 +48,10 @@ export class DbSearch implements Search {
       }
       return 0
     })
-    savedContents = savedContents.filter((item, index, self) => self.findIndex((i) => i.title === item.title && i.artist === item.artist) === index)
+    savedContents = savedContents.filter((item, index, self) => self.findIndex((i) => i.id === item.id) === index)
+    if (savedContents.length > 0) {
+      await this.cacheRepository.set(`search:${query}:${skip ?? 0}:${take ?? 20}`, JSON.stringify(savedContents), 60 * 60 * 24)
+    }
     return savedContents
   }
 }
