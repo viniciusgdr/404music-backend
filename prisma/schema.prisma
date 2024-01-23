@@ -76,16 +76,16 @@ enum Genre {
 }
 
 model Music {
-  id        String          @id @default(cuid())
-  partnerId String          @map("partner_id")
-  likesOnPartnerId Int      @map("likes_on_partner_id") @default(0)
-  title     String
-  artist    String
-  album     String
-  year      Int
-  thumbnail String
-  genre     Genre
-  createdAt DateTime        @default(now()) @map("created_at")
-  updatedAt DateTime        @updatedAt @map("updated_at")
-  playlists PlaylistMusic[]
+  id               String          @id @default(cuid())
+  partnerId        String          @map("partner_id")
+  likesOnPartnerId BigInt          @default(0) @map("likes_on_partner_id")
+  title            String
+  artist           String
+  album            String
+  year             Int
+  thumbnail        String
+  genre            Genre
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+  playlists        PlaylistMusic[]
 }
