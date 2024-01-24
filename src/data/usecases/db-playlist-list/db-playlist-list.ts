@@ -14,7 +14,7 @@ export class DbPlaylistList implements PlaylistList {
       return JSON.parse(cache)
     }
     const playlist = await this.playlistListRepository.loadAll(params)
-    await this.cacheRepository.set(`playlist-list:${params.id}`, JSON.stringify(playlist))
+    await this.cacheRepository.set(`playlist-list:${params.id}`, JSON.stringify(playlist), 120)
     return playlist
   }
 }

@@ -10,6 +10,15 @@ export class LoadAllPlaylistByUserIdPrismaRepository implements LoadAllPlaylistR
     const playlist = await this.prismaClient.playlist.findMany({
       where: {
         userId: params.id
+      },
+      select: {
+        thumbnail: true,
+        description: true,
+        title: true,
+        type: true,
+        updatedAt: true,
+        createdAt: true,
+        id: true
       }
     })
     return playlist
