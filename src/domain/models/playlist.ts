@@ -6,6 +6,7 @@ export interface Playlist {
   thumbnail: string
   userId: string
   type: PlaylistType
+  fixed: boolean
   createdAt: Date
   updatedAt: Date
 }

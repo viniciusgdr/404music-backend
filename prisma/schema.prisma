@@ -41,6 +41,7 @@ model Playlist {
   type        PlaylistType
   createdAt   DateTime        @default(now()) @map("created_at")
   updatedAt   DateTime        @updatedAt @map("updated_at")
+  fixed       Boolean         @default(false)
   user        User            @relation(fields: [userId], references: [id])
   musics      PlaylistMusic[]
 }
