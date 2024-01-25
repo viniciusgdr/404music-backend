@@ -7,6 +7,14 @@ export class DeletelePlaylistPrismaRepository implements DeletePlaylistRepositor
   ) { }
 
   async delete (params: DeletePlaylistRepository.Params): Promise<DeletePlaylistRepository.Result> {
+    await this.prismaClient.playlistMusic.deleteMany({
+      where: {
+        playlistId: params.playlistId,
+        playlist: {
+          userId: params.userId
+        }
+      }
+    })
     const playlist = await this.prismaClient.playlist.delete({
       where: {
         id: params.playlistId,
