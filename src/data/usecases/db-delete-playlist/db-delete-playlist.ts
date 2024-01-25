@@ -1,4 +1,4 @@
-import { type DeletePlaylistRepository } from '@/data/protocols/DeletePlaylistRepository'
+import { type DeletePlaylistRepository } from '../../../data/protocols/DeletePlaylistRepository'
 import { type DeletePlaylist } from '../../../domain/usecases/delete-playlist'
 
 export class DbDeletePlaylist implements DeletePlaylist {

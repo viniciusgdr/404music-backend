@@ -1,4 +1,4 @@
-import { type Playlist } from '@/domain/models/playlist'
+import { type Playlist } from '../../domain/models/playlist'
 
 export interface LoadPlaylistRepository {
   load: (playlistId: string) => Promise<LoadPlaylistRepository.Result>

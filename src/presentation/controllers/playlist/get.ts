@@ -1,7 +1,7 @@
-import { type GetPlaylist } from '@/domain/usecases/get-playlist'
-import { MissingParamError } from '@/presentation/errors'
-import { badRequest, ok, serverError } from '@/presentation/helpers/http-helper'
-import { type HttpRequest, type Controller, type HttpResponse } from '@/presentation/protocols'
+import { type GetPlaylist } from '../../../domain/usecases/get-playlist'
+import { MissingParamError } from '../../../presentation/errors'
+import { badRequest, ok, serverError } from '../../../presentation/helpers/http-helper'
+import { type HttpRequest, type Controller, type HttpResponse } from '../../../presentation/protocols'
 
 export class GetPlaylistController implements Controller {
   constructor (

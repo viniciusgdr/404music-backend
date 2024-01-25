@@ -1,7 +1,7 @@
-import { type AddMusicPlaylist } from '@/domain/usecases/add-music-playlist'
+import { type AddMusicPlaylist } from '../../../domain/usecases/add-music-playlist'
 import { type LoadUserByIdRepository } from '../../protocols/loadUserByid'
-import { type LoadPlaylistRepository } from '@/data/protocols/loadPlaylistRepository'
-import { type AddMusicPlaylistRepository } from '@/data/protocols/AddMusicPlaylistRepository'
+import { type LoadPlaylistRepository } from '../../../data/protocols/loadPlaylistRepository'
+import { type AddMusicPlaylistRepository } from '../../../data/protocols/AddMusicPlaylistRepository'
 
 export class DbAddMusicPlaylist implements AddMusicPlaylist {
   constructor (

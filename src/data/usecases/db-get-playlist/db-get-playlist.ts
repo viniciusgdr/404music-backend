@@ -1,5 +1,5 @@
-import { type LoadPlaylistRepository } from '@/data/protocols/loadPlaylistRepository'
-import { type GetPlaylist } from '@/domain/usecases/get-playlist'
+import { type LoadPlaylistRepository } from '../../../data/protocols/loadPlaylistRepository'
+import { type GetPlaylist } from '../../../domain/usecases/get-playlist'
 
 export class DbGetPlaylist implements GetPlaylist {
   constructor (

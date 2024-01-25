@@ -1,4 +1,4 @@
-import { type AddMusicPlaylistRepository } from '@/data/protocols/AddMusicPlaylistRepository'
+import { type AddMusicPlaylistRepository } from '../../../data/protocols/AddMusicPlaylistRepository'
 import { type PrismaClient } from '@prisma/client'
 
 export class AddMusicPlaylistPrismaRepository implements AddMusicPlaylistRepository {

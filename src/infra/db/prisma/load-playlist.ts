@@ -1,4 +1,4 @@
-import { type LoadPlaylistRepository } from '@/data/protocols/loadPlaylistRepository'
+import { type LoadPlaylistRepository } from '../../../data/protocols/loadPlaylistRepository'
 import { type PrismaClient } from '@prisma/client'
 
 export class LoadPlaylistPrismaRepository implements LoadPlaylistRepository {
