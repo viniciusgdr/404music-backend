@@ -11,5 +11,7 @@ export namespace LoadAllPlaylistRepository {
     id: string
   }
 
-  export type Result = Array<Omit<Playlist, keyof PlaylistOmit>>
+  export type Result = Array<Omit<(Playlist & {
+    musics: Playlist.Music[]
+  }), keyof PlaylistOmit>>
 }

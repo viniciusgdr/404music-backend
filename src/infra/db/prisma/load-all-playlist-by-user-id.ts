@@ -19,7 +19,8 @@ export class LoadAllPlaylistByUserIdPrismaRepository implements LoadAllPlaylistR
         updatedAt: true,
         createdAt: true,
         id: true,
-        fixed: true
+        fixed: true,
+        musics: true
       }
     })
     return playlist
