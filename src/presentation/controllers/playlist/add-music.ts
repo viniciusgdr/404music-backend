@@ -17,13 +17,13 @@ export class AddMusicPlaylistController implements Controller {
           return badRequest(new MissingParamError(field))
         }
       }
-      const playlist = await this.addMusicPlaylist.addMusic({
+      const music = await this.addMusicPlaylist.addMusic({
         playlistId,
         musicId,
         userId
       })
       return ok({
-        playlist
+        music
       })
     } catch (error: any) {
       console.log(error)

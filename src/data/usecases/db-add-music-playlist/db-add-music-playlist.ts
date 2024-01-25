@@ -13,17 +13,17 @@ export class DbAddMusicPlaylist implements AddMusicPlaylist {
   async addMusic (params: AddMusicPlaylist.Params): Promise<AddMusicPlaylist.Result> {
     const user = await this.loadUserByIdRepository.load(params.userId)
     if (!user) {
-      return false
+      return null
     }
     const playlist = await this.loadPlaylistRepository.load(params.playlistId)
     if (!playlist) {
-      return false
+      return null
     }
     const music = playlist.musics.find(music => music.id === params.musicId)
     if (music) {
-      return false
+      return null
     }
-    await this.addMusicPlaylistRepository.addMusic(params)
-    return true
+    const newMusic = await this.addMusicPlaylistRepository.addMusic(params)
+    return newMusic
   }
 }

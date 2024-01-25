@@ -7,20 +7,13 @@ export class AddMusicPlaylistPrismaRepository implements AddMusicPlaylistReposit
   ) { }
 
   async addMusic (params: AddMusicPlaylistRepository.Params): Promise<AddMusicPlaylistRepository.Result> {
-    const { playlistId, musicId, userId } = params
-    await this.prismaClient.playlist.update({
-      where: {
-        id: playlistId,
-        userId
-      },
+    const { playlistId, musicId } = params
+    const music = await this.prismaClient.playlistMusic.create({
       data: {
-        musics: {
-          create: {
-            musicId
-          }
-        }
+        playlistId,
+        musicId
       }
     })
-    return true
+    return music
   }
 }
