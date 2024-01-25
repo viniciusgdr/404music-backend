@@ -4,14 +4,12 @@ import { LoadAllPlaylistByUserIdPrismaRepository } from '../../infra/db/prisma/l
 import { PlaylistListController } from '../../presentation/controllers/playlist/list'
 import { type Controller } from '../../presentation/protocols'
 import { type RedisClientType, type RedisFunctions, type RedisModules, type RedisScripts } from 'redis'
-import { RedisCacheRepository } from '../../infra/db/redis/cacheRepository'
 
 export const makePlaylistListController = (
   prismaClient: PrismaClient,
   redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>
 ): Controller => {
   const playlistListRepository = new LoadAllPlaylistByUserIdPrismaRepository(prismaClient)
-  const cacheRepository = new RedisCacheRepository(redisClient)
-  const playlistList = new DbPlaylistList(playlistListRepository, cacheRepository)
+  const playlistList = new DbPlaylistList(playlistListRepository)
   return new PlaylistListController(playlistList)
 }
