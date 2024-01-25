@@ -22,8 +22,8 @@ export class DbCreatePlaylist implements CreatePlaylist {
       userId: params.userId,
       description: '',
       fixed: false,
-      thumbnail: '',
-      title: `Minha playlist nº ${playlists.length + 1}`,
+      thumbnail: params.thumbnailUrl ?? '',
+      title: params.title ?? `Minha playlist nº ${playlists.length + 1}`,
       type: 'PRIVATE'
     })
 

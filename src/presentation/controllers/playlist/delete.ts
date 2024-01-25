@@ -17,6 +17,7 @@ export class DeletePlaylistController implements Controller {
 
       return ok(playlist)
     } catch (error: any) {
+      console.log(error)
       return serverError(error)
     }
   }

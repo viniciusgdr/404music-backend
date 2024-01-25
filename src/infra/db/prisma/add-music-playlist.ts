@@ -15,8 +15,8 @@ export class AddMusicPlaylistPrismaRepository implements AddMusicPlaylistReposit
       },
       data: {
         musics: {
-          connect: {
-            id: musicId
+          create: {
+            musicId
           }
         }
       }

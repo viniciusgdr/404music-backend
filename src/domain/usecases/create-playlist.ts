@@ -7,6 +7,8 @@ export interface CreatePlaylist {
 export namespace CreatePlaylist {
   export interface Params {
     userId: string
+    title?: string
+    thumbnailUrl?: string
   }
   export type Result = Playlist
 }

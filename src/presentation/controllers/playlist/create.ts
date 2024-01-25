@@ -14,7 +14,9 @@ export class CreatePlaylistController implements Controller {
         return badRequest(new MissingParamError('userId'))
       }
       const playlist = await this.createPlaylist.create({
-        userId: request.body.userId
+        userId: request.body.userId,
+        title: request.body.title,
+        thumbnailUrl: request.body.thumbnailUrl
       })
 
       return ok(playlist)

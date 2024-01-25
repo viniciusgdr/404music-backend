@@ -22,8 +22,11 @@ export class AddMusicPlaylistController implements Controller {
         musicId,
         userId
       })
-      return ok(playlist)
+      return ok({
+        playlist
+      })
     } catch (error: any) {
+      console.log(error)
       return serverError(error)
     }
   }
