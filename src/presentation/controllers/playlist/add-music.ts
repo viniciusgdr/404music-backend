@@ -1,0 +1,30 @@
+import { type AddMusicPlaylist } from '@/domain/usecases/add-music-playlist'
+import { MissingParamError } from '@/presentation/errors'
+import { badRequest, ok, serverError } from '@/presentation/helpers/http-helper'
+import { type HttpRequest, type Controller, type HttpResponse } from '@/presentation/protocols'
+
+export class AddMusicPlaylistController implements Controller {
+  constructor (
+    private readonly addMusicPlaylist: AddMusicPlaylist
+  ) {}
+
+  async handle (request: HttpRequest): Promise<HttpResponse> {
+    try {
+      const { playlistId, musicId, userId } = request.body
+      const requiredFields = ['playlistId', 'musicId', 'userId']
+      for (const field of requiredFields) {
+        if (!request.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
+      }
+      const playlist = await this.addMusicPlaylist.addMusic({
+        playlistId,
+        musicId,
+        userId
+      })
+      return ok(playlist)
+    } catch (error: any) {
+      return serverError(error)
+    }
+  }
+}

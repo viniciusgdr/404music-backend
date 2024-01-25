@@ -10,3 +10,12 @@ export interface Playlist {
   createdAt: Date
   updatedAt: Date
 }
+export namespace Playlist {
+  export interface Music {
+    id: string
+    playlistId: string
+    musicId: string
+    createdAt: Date
+    updatedAt: Date
+  }
+}
