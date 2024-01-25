@@ -5,14 +5,9 @@
     "target": "es2019",
     "esModuleInterop": true,
     "sourceMap": true,
-    "rootDirs": ["src"],
     "strictNullChecks": true,
     "strict": true,
-    "baseUrl": "src",
-    "resolveJsonModule": true,
-    "paths": {
-      "@/*": ["*"]
-    }
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
