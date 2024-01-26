@@ -4,6 +4,7 @@ export class LoadPlayerPairProcessDownloadFSRepository implements LoadPlayerPair
   async load (download: LoadPlayerPairProcessDownloadRepository.Params): Promise<LoadPlayerPairProcessDownloadRepository.Result> {
     const { id } = download
     const pathMain = __dirname.replace('.next/server/pages/api/music', '')
+      .replace('.next/server/pages/api/queue', '')
     const path = pathMain + `public/musics/${id}.mp3`
     const exists = fs.statSync(path)
     if (exists.isFile()) {

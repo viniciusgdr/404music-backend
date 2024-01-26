@@ -1,7 +1,8 @@
 import { type AddMusicPlaylistRepository } from '../../../data/protocols/AddMusicPlaylistRepository'
 import { type PrismaClient } from '@prisma/client'
+import { type DelMusicPlaylistRepository } from '../../../data/protocols/DelMusicPlaylistRepository'
 
-export class AddMusicPlaylistPrismaRepository implements AddMusicPlaylistRepository {
+export class MusicPlaylistPrismaRepository implements AddMusicPlaylistRepository, DelMusicPlaylistRepository {
   constructor (
     private readonly prismaClient: PrismaClient
   ) { }
@@ -15,5 +16,16 @@ export class AddMusicPlaylistPrismaRepository implements AddMusicPlaylistReposit
       }
     })
     return music
+  }
+
+  async delMusic (params: DelMusicPlaylistRepository.Params): Promise<DelMusicPlaylistRepository.Result> {
+    const { playlistId, musicId } = params
+    await this.prismaClient.playlistMusic.delete({
+      where: {
+        playlistId,
+        id: musicId
+      }
+    })
+    return true
   }
 }
