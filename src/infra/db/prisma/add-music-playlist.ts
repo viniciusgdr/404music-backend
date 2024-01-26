@@ -13,6 +13,21 @@ export class MusicPlaylistPrismaRepository implements AddMusicPlaylistRepository
       data: {
         playlistId,
         musicId
+      },
+      include: {
+        music: {
+          select: {
+            id: true,
+            title: true,
+            thumbnail: true,
+            createdAt: true,
+            updatedAt: true,
+            album: true,
+            artist: true,
+            genre: true,
+            year: true
+          }
+        }
       }
     })
     return music
@@ -22,8 +37,8 @@ export class MusicPlaylistPrismaRepository implements AddMusicPlaylistRepository
     const { playlistId, musicId } = params
     await this.prismaClient.playlistMusic.delete({
       where: {
-        playlistId,
-        id: musicId
+        id: musicId,
+        playlistId
       }
     })
     return true

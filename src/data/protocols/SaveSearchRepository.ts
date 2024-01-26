@@ -13,7 +13,7 @@ export namespace SaveSearchRepository {
     year: number
     thumbnail: string
     genre: string
-    likes: number
+    likes: bigint
   }
-  export type Result = Music
+  export type Result = Omit<Music, 'likesOnPartnerId'>
 }

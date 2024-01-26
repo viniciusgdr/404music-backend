@@ -5,6 +5,7 @@ export interface Music {
   album: string
   year: number
   genre: string
+  likesOnPartnerId: bigint
   createdAt: Date
   thumbnail: string
   updatedAt: Date

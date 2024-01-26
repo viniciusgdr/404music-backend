@@ -20,7 +20,23 @@ export class LoadAllPlaylistByUserIdPrismaRepository implements LoadAllPlaylistR
         createdAt: true,
         id: true,
         fixed: true,
-        musics: true
+        musics: {
+          include: {
+            music: {
+              select: {
+                id: true,
+                title: true,
+                thumbnail: true,
+                createdAt: true,
+                updatedAt: true,
+                album: true,
+                artist: true,
+                genre: true,
+                year: true
+              }
+            }
+          }
+        }
       }
     })
     return playlist

@@ -12,7 +12,23 @@ export class LoadPlaylistPrismaRepository implements LoadPlaylistRepository {
         id
       },
       include: {
-        musics: true
+        musics: {
+          include: {
+            music: {
+              select: {
+                id: true,
+                title: true,
+                thumbnail: true,
+                createdAt: true,
+                updatedAt: true,
+                album: true,
+                artist: true,
+                genre: true,
+                year: true
+              }
+            }
+          }
+        }
       }
     })
     return playlist

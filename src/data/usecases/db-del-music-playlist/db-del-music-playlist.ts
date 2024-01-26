@@ -19,11 +19,15 @@ export class DbDelMusicPlaylist implements DelMusicPlaylist {
     if (!playlist) {
       return false
     }
-    const music = playlist.musics.find(music => music.id === params.musicId)
-    if (music) {
+    const music = playlist.musics.find(music => music.musicId === params.musicId)
+    if (!music) {
       return false
     }
-    const newMusic = await this.delMusicPlaylistRepository.delMusic(params)
+    const newMusic = await this.delMusicPlaylistRepository.delMusic({
+      playlistId: params.playlistId,
+      musicId: music.id,
+      userId: params.userId
+    })
     return newMusic
   }
 }

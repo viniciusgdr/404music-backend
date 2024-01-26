@@ -1,3 +1,5 @@
+import { type Music as MusicModel } from './music'
+
 export type PlaylistType = 'PUBLIC' | 'PRIVATE'
 export interface Playlist {
   id: string
@@ -17,5 +19,6 @@ export namespace Playlist {
     musicId: string
     createdAt: Date
     updatedAt: Date
+    music: Omit<MusicModel, 'likesOnPartnerId'>
   }
 }
