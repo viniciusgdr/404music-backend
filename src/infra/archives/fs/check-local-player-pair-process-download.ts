@@ -6,6 +6,10 @@ export class CheckLocalPlayerPairProcessDownloadFSRepository implements CheckLoc
   async check (download: CheckLocalPlayerPairProcessDownloadRepository.Params): Promise<CheckLocalPlayerPairProcessDownloadRepository.Result> {
     const { id } = download
     const pathMain = path.join(process.cwd(), 'public', 'musics')
+    const dirExists = fs.existsSync(pathMain)
+    if (!dirExists) {
+      fs.mkdirSync(pathMain)
+    }
     const pathStr = pathMain + `/${id}.mp3`
     const exists = fs.existsSync(pathStr)
     return exists

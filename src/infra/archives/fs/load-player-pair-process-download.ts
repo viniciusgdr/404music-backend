@@ -4,6 +4,10 @@ import fs from 'fs'
 export class LoadPlayerPairProcessDownloadFSRepository implements LoadPlayerPairProcessDownloadRepository {
   async load (download: LoadPlayerPairProcessDownloadRepository.Params): Promise<LoadPlayerPairProcessDownloadRepository.Result> {
     const { id } = download
+    const pathExists = fs.existsSync(process.cwd() + '/public/musics')
+    if (!pathExists) {
+      fs.mkdirSync(process.cwd() + '/public/musics')
+    }
     const pathStr = path.join(process.cwd(), `/public/musics/${id}.mp3`)
     const exists = fs.statSync(pathStr)
     console.log('loaded')
