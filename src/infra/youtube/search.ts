@@ -43,7 +43,7 @@ export class YoutubeSearchRepository implements SearchRepository {
           thumbnail: thumb.substring(0, thumb.indexOf('?')),
           album: '',
           genre: '',
-          likes: Number(item.viewCountText.simpleText.replace(/\D/g, '')),
+          likes: Number(item.viewCountText.simpleText.replace(/\D/g, '')) as unknown as bigint,
           year: 0
         } satisfies SearchRepository.Result
       })

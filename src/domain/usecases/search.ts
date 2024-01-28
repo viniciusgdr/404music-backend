@@ -11,5 +11,5 @@ export namespace Search {
     take: number | null
   }
 
-  export type Result = Music[]
+  export type Result = Array<Omit<Music, 'likesOnPartnerId'>>
 }
