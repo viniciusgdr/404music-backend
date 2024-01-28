@@ -5,6 +5,7 @@ export interface CheckLocalPlayerPairProcessDownloadRepository {
 export namespace CheckLocalPlayerPairProcessDownloadRepository {
   export interface Params {
     id: string
+    PATH: string
   }
 
   export type Result = boolean

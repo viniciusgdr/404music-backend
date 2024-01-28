@@ -19,16 +19,19 @@ export class LoadPlayerPairProcessDownload implements PlayerPairProcessDownload 
       throw new Error('Music not found')
     }
     const exists = await this.checkLocalPlayerPairProcessDownloadRepository.check({
-      id: download.id
+      id: download.id,
+      PATH: download.PATH
     })
     if (exists) {
       const result = await this.loadLocalPlayerPairProcessDownloadRepository.load({
-        id: download.id
+        id: download.id,
+        PATH: download.PATH
       })
       return result
     }
     const result = await this.loadPlayerPairProcessDownloadRepository.load({
-      id: music.partnerId
+      id: music.partnerId,
+      PATH: download.PATH
     })
     return result
   }

@@ -6,5 +6,6 @@ export namespace SaveLocalPlayerPairProcessDownloadRepository {
   export interface Params {
     id: string
     buffer: Buffer
+    PATH: string
   }
 }

@@ -4,9 +4,10 @@ import { type CheckLocalPlayerPairProcessDownloadRepository } from '../../protoc
 export class DbMusicAlreadyOnDB implements MusicAlreadyOnDB {
   constructor (private readonly musicAlreadyOnDBRepository: CheckLocalPlayerPairProcessDownloadRepository) { }
 
-  async check (id: string): Promise<boolean> {
+  async check (id: string, PATH: string): Promise<boolean> {
     const musicExists = await this.musicAlreadyOnDBRepository.check({
-      id
+      id,
+      PATH
     })
     return musicExists
   }

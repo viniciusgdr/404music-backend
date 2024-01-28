@@ -1,3 +1,3 @@
 export interface MusicAlreadyOnDB {
-  check: (id: string) => Promise<boolean>
+  check: (id: string, PATH: string) => Promise<boolean>
 }

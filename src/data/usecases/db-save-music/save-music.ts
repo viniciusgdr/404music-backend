@@ -9,7 +9,8 @@ export class DbSaveMusic implements SaveMusic {
   async save (music: SaveMusic.Params): Promise<void> {
     await this.saveLocalPlayerPairProcessDownloadRepository.save({
       id: music.id,
-      buffer: music.buffer
+      buffer: music.buffer,
+      PATH: music.PATH
     })
   }
 }

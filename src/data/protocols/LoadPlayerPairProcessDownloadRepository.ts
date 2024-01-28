@@ -8,6 +8,7 @@ export interface LoadPlayerPairProcessDownloadRepository {
 export namespace LoadPlayerPairProcessDownloadRepository {
   export interface Params {
     id: string
+    PATH: string
   }
   export interface Result {
     stream: fs.ReadStream | internal.Readable
