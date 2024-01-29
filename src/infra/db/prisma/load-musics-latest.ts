@@ -10,7 +10,7 @@ export class LoadMusicsLatestPrismaRepository implements LoadMusicsLatestReposit
     const musics = await this.prismaClient.music.findMany({
       take: params.limit,
       orderBy: {
-        createdAt: 'asc'
+        createdAt: 'desc'
       },
       select: {
         id: true,

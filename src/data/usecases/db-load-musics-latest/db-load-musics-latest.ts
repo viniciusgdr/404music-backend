@@ -6,7 +6,7 @@ export class DbLoadMusicsLatest implements MusicLatest {
 
   async load (): Promise<MusicLatest.Result> {
     const musics = await this.loadMusicsLatestRepository.load({
-      limit: 100
+      limit: 75
     })
     return musics
   }
