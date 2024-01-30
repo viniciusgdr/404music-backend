@@ -37,6 +37,9 @@ export class LoadAllPlaylistByUserIdPrismaRepository implements LoadAllPlaylistR
             }
           }
         }
+      },
+      orderBy: {
+        updatedAt: 'desc'
       }
     })
     return playlist
