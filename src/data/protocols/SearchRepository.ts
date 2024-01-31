@@ -10,6 +10,7 @@ export namespace SearchRepository {
   }
 
   export interface Result {
+    partnerType: 'YOUTUBE' | 'SOUNDCLOUD'
     partnerId: string
     title: string
     artist: string

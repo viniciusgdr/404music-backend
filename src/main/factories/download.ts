@@ -4,16 +4,22 @@ import { CheckLocalPlayerPairProcessDownloadFSRepository } from '../../infra/arc
 import { LoadPlayerPairProcessDownloadFSRepository } from '../../infra/archives/fs/load-player-pair-process-download'
 import { LoadMusicByIdPrismaRepository } from '../../infra/db/prisma/load-music-by-id'
 import { YoutubeDownloadRepository } from '../../infra/youtube/download'
+import { SoundcloudDownloadRepository } from '../../infra/soundcloud/download'
 
 export const makeDownloadUsecase = (prismaClient: PrismaClient): LoadPlayerPairProcessDownload => {
   const checkLocalPlayerPairProcessDownloadRepository = new CheckLocalPlayerPairProcessDownloadFSRepository()
   const loadLocalPlayerPairProcessDownloadRepository = new LoadPlayerPairProcessDownloadFSRepository()
   const loadMusicByIdRepository = new LoadMusicByIdPrismaRepository(prismaClient)
-  const loadPlayerPairProcessDownloadRepository = new YoutubeDownloadRepository()
+
+  const loadYoutubePlayerPairProcessDownloadRepository = new YoutubeDownloadRepository()
+  const loadSoundcloudPlayerPairProcessDownloadRepository = new SoundcloudDownloadRepository()
   return new LoadPlayerPairProcessDownload(
     checkLocalPlayerPairProcessDownloadRepository,
     loadLocalPlayerPairProcessDownloadRepository,
     loadMusicByIdRepository,
-    loadPlayerPairProcessDownloadRepository
+    [
+      loadYoutubePlayerPairProcessDownloadRepository,
+      loadSoundcloudPlayerPairProcessDownloadRepository
+    ]
   )
 }

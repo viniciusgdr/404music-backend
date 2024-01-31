@@ -8,7 +8,7 @@ export class LoadPlayerPairProcessDownload implements PlayerPairProcessDownload 
     private readonly checkLocalPlayerPairProcessDownloadRepository: CheckLocalPlayerPairProcessDownloadRepository,
     private readonly loadLocalPlayerPairProcessDownloadRepository: LoadPlayerPairProcessDownloadRepository,
     private readonly loadMusicByIdRepository: LoadMusicByIdRepository,
-    private readonly loadPlayerPairProcessDownloadRepository: LoadPlayerPairProcessDownloadRepository
+    private readonly loadPlayerPairProcessDownloadRepositories: LoadPlayerPairProcessDownloadRepository[]
   ) {}
 
   async download (download: PlayerPairProcessDownload.Params): Promise<PlayerPairProcessDownload.Result> {
@@ -29,7 +29,11 @@ export class LoadPlayerPairProcessDownload implements PlayerPairProcessDownload 
       })
       return result
     }
-    const result = await this.loadPlayerPairProcessDownloadRepository.load({
+    const repository = this.loadPlayerPairProcessDownloadRepositories.find(repository => repository.type === music.partnerType)
+    if (!repository) {
+      throw new Error('Repository not found')
+    }
+    const result = await repository.load({
       id: music.partnerId,
       PATH: download.PATH
     })

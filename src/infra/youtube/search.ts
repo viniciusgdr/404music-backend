@@ -44,7 +44,8 @@ export class YoutubeSearchRepository implements SearchRepository {
           album: '',
           genre: '',
           likes: Number(item.viewCountText.simpleText.replace(/\D/g, '')) as unknown as bigint,
-          year: 0
+          year: 0,
+          partnerType: 'YOUTUBE'
         } satisfies SearchRepository.Result
       })
     }

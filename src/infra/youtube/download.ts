@@ -2,6 +2,8 @@ import { type LoadPlayerPairProcessDownloadRepository } from '../../data/protoco
 import ytdl from 'ytdl-core'
 
 export class YoutubeDownloadRepository implements LoadPlayerPairProcessDownloadRepository {
+  type = 'YOUTUBE'
+
   async load (load: LoadPlayerPairProcessDownloadRepository.Params): Promise<LoadPlayerPairProcessDownloadRepository.Result> {
     const { id } = load
     const info = await ytdl.getInfo(id)

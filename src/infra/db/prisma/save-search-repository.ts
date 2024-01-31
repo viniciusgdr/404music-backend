@@ -21,7 +21,8 @@ export class SaveSearchPrismaRepository implements SaveSearchRepository {
         year: music.year,
         genre,
         thumbnail: music.thumbnail,
-        likesOnPartnerId: music.likes
+        likesOnPartnerId: music.likes,
+        partnerType: music.partnerType
       }
     }).filter((music) => !musicsOnDB.find((musicOnDB) => musicOnDB.partnerId === music.partnerId))
 

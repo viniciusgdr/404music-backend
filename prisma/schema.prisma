@@ -76,8 +76,13 @@ enum Genre {
   OUTROS
 }
 
+enum PartnerType {
+  YOUTUBE
+  SOUNDCLOUD
+}
 model Music {
   id               String          @id @default(cuid())
+  partnerType      PartnerType     @map("partner_type")
   partnerId        String          @map("partner_id")
   likesOnPartnerId BigInt          @default(0) @map("likes_on_partner_id")
   title            String

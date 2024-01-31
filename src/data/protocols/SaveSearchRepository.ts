@@ -14,6 +14,7 @@ export namespace SaveSearchRepository {
     thumbnail: string
     genre: string
     likes: bigint
+    partnerType: 'YOUTUBE' | 'SOUNDCLOUD'
   }
   export type Result = Omit<Music, 'likesOnPartnerId'>
 }
