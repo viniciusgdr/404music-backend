@@ -32,12 +32,18 @@ enum PlaylistType {
   PRIVATE
 }
 
+enum CreatedBy {
+  USER
+  SYSTEM
+}
+
 model Playlist {
   id          String          @id @default(cuid())
   title       String
   description String          @default("")
   thumbnail   String          @default("")
   userId      String          @map("user_id")
+  createdBy   CreatedBy       @default(USER) @map("created_by")
   type        PlaylistType
   createdAt   DateTime        @default(now()) @map("created_at")
   updatedAt   DateTime        @updatedAt @map("updated_at")
@@ -80,6 +86,7 @@ enum PartnerType {
   YOUTUBE
   SOUNDCLOUD
 }
+
 model Music {
   id               String          @id @default(cuid())
   partnerType      PartnerType     @map("partner_type")

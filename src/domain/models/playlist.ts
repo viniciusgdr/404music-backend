@@ -11,6 +11,7 @@ export interface Playlist {
   fixed: boolean
   createdAt: Date
   updatedAt: Date
+  createdBy: 'SYSTEM' | 'USER'
 }
 export namespace Playlist {
   export interface Music {

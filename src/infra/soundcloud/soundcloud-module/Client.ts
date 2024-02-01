@@ -35,7 +35,7 @@ export default class Client {
       this.apiKey = apiKey
     }
     if (apiKeyProps) {
-      if (updatedApiKeyDate && (new Date().getTime() - updatedApiKeyDate.getTime()) < 30 * 60 * 1000) {
+      if (updatedApiKeyDate && (new Date().getTime() - updatedApiKeyDate.getTime()) < 60 * 60 * 1000) {
         this.apiKey = apiKeyProps
       } else {
         apiKeyProps = ''
