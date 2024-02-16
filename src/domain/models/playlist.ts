@@ -4,8 +4,8 @@ export type PlaylistType = 'PUBLIC' | 'PRIVATE'
 export interface Playlist {
   id: string
   title: string
-  description: string
-  thumbnail: string
+  description: string | null
+  thumbnail: string | null
   userId: string
   type: PlaylistType
   fixed: boolean
