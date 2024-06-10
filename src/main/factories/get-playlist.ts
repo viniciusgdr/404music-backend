@@ -2,9 +2,9 @@ import { DbGetPlaylist } from '../../data/usecases/db-get-playlist/db-get-playli
 import { LoadPlaylistPrismaRepository } from '../../infra/db/prisma/load-playlist'
 import { GetPlaylistController } from '../../presentation/controllers/playlist/get'
 import { type Controller } from '../../presentation/protocols'
-import { type PrismaClient } from '@prisma/client'
+import { prismaClient } from '../server'
 
-export const makeGetPlaylistController = (prismaClient: PrismaClient): Controller => {
+export const makeGetPlaylistController = (): Controller => {
   const loadPlaylistRepository = new LoadPlaylistPrismaRepository(prismaClient)
   const getPlaylist = new DbGetPlaylist(loadPlaylistRepository)
   return new GetPlaylistController(getPlaylist)

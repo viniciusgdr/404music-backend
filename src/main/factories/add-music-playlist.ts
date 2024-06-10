@@ -4,9 +4,9 @@ import { LoadPlaylistPrismaRepository } from '../../infra/db/prisma/load-playlis
 import { LoadUserByIdPrismaRepository } from '../../infra/db/prisma/load-user-by-id'
 import { AddMusicPlaylistController } from '../../presentation/controllers/playlist/add-music'
 import { type Controller } from '../../presentation/protocols'
-import { type PrismaClient } from '@prisma/client'
+import { prismaClient } from '../server'
 
-export const makeAddMusicPlaylistRepository = (prismaClient: PrismaClient): Controller => {
+export const makeAddMusicPlaylistRepository = (): Controller => {
   const loadUserByIdRepository = new LoadUserByIdPrismaRepository(prismaClient)
   const loadPlaylistRepository = new LoadPlaylistPrismaRepository(prismaClient)
   const addMusicPlaylistRepository = new MusicPlaylistPrismaRepository(prismaClient)

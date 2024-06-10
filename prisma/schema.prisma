@@ -12,10 +12,23 @@ datasource db {
 
 enum AccountMethod {
   GOOGLE
+  EMAIL
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  payload      String
+  userAgent    String?  @map("user_agent")
+  ipAddress    String?  @map("ip_address")
+  lastActivity DateTime @map("last_activity")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  user         User     @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id            String        @id @default(cuid())
+  id            String        @id @default(uuid())
   email         String        @unique
   name          String
   password      String
@@ -25,6 +38,7 @@ model User {
   createdAt     DateTime      @default(now()) @map("created_at")
   updatedAt     DateTime      @updatedAt @map("updated_at")
   playlists     Playlist[]
+  sessions      Session[]
 }
 
 enum PlaylistType {
@@ -38,10 +52,10 @@ enum CreatedBy {
 }
 
 model Playlist {
-  id          String          @id @default(cuid())
+  id          String          @id @default(uuid())
   title       String
-  description String?          @default("")
-  thumbnail   String?          @default("")
+  description String?         @default("")
+  thumbnail   String?         @default("")
   userId      String          @map("user_id")
   createdBy   CreatedBy       @default(USER) @map("created_by")
   type        PlaylistType
@@ -53,7 +67,7 @@ model Playlist {
 }
 
 model PlaylistMusic {
-  id         String   @id @default(cuid())
+  id         String   @id @default(uuid())
   playlistId String   @map("playlist_id")
   musicId    String   @map("music_id")
   createdAt  DateTime @default(now()) @map("created_at")
@@ -88,7 +102,7 @@ enum PartnerType {
 }
 
 model Music {
-  id               String          @id @default(cuid())
+  id               String          @id @default(uuid())
   partnerType      PartnerType     @map("partner_type")
   partnerId        String          @map("partner_id")
   likesOnPartnerId BigInt          @default(0) @map("likes_on_partner_id")

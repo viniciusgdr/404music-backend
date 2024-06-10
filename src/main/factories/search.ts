@@ -1,16 +1,13 @@
-import { type PrismaClient } from '@prisma/client'
 import { DbSearch } from '../../data/usecases/db-search/db-search'
 import { SaveSearchPrismaRepository } from '../../infra/db/prisma/save-search-repository'
 import { RedisCacheRepository } from '../../infra/db/redis/cacheRepository'
 import { YoutubeSearchRepository } from '../../infra/youtube/search'
 import { SearchController } from '../../presentation/controllers/search/search'
 import { type Controller } from '../../presentation/protocols'
-import { type RedisClientType, type RedisFunctions, type RedisModules, type RedisScripts } from 'redis'
 import { SoundCloudSearchRepository } from '../../infra/soundcloud/search'
+import { prismaClient, redisClient } from '../server'
 
-export const makeSearchController = (
-  prismaClient: PrismaClient, redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>
-): Controller => {
+export const makeSearchController = (): Controller => {
   const cacheRepository = new RedisCacheRepository(redisClient)
   const searchYoutubeRepository = new YoutubeSearchRepository()
   const searchSoundCloudRepository = new SoundCloudSearchRepository()

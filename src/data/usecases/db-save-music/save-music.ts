@@ -6,11 +6,11 @@ export class DbSaveMusic implements SaveMusic {
     private readonly saveLocalPlayerPairProcessDownloadRepository: SaveLocalPlayerPairProcessDownloadRepository
   ) {}
 
-  async save (music: SaveMusic.Params): Promise<void> {
+  async save ({ PATH, buffer, id }: SaveMusic.Params): Promise<void> {
     await this.saveLocalPlayerPairProcessDownloadRepository.save({
-      id: music.id,
-      buffer: music.buffer,
-      PATH: music.PATH
+      id,
+      buffer,
+      PATH
     })
   }
 }
