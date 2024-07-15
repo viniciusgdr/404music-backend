@@ -7,9 +7,11 @@ export interface HttpResponse {
   headers?: Record<string, string>
 }
 export interface HttpRequest {
+  params?: any
   body?: any
   query?: any
-  params?: any
+  headers?: any
+  additionalInfo?: any
   _extra?: {
     res: Response
   }

@@ -9,5 +9,6 @@ export namespace Authenticate {
 
   export interface Result {
     jwt: string
+    isFirstLogin: boolean
   }
 }

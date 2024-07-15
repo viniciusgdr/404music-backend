@@ -10,7 +10,9 @@ import { prismaClient } from '../server'
 export const makeOAuthAuthorizeController = (): Controller => {
   const googleAuth = new GoogleUserRepository()
   const accountRepository = new AccountPrismaRepository(prismaClient)
-  const encrypter = new JwtAdapter('secret')
+  const encrypter = new JwtAdapter(
+    process.env.JWT_SECRET as string
+  )
   const generatePayloadSession = new PayloadGenerator(encrypter)
   const authenticate = new DbAuthenticate(
     googleAuth,

@@ -18,7 +18,7 @@ enum AccountMethod {
 model Session {
   id           String   @id @default(uuid())
   userId       String   @map("user_id")
-  payload      String
+  payload      String   @unique
   userAgent    String?  @map("user_agent")
   ipAddress    String?  @map("ip_address")
   lastActivity DateTime @map("last_activity")
@@ -39,6 +39,7 @@ model User {
   updatedAt     DateTime      @updatedAt @map("updated_at")
   playlists     Playlist[]
   sessions      Session[]
+  genresLiked   Genre[]
 }
 
 enum PlaylistType {
@@ -81,11 +82,25 @@ enum Genre {
   POP
   MPB
   FUNK
+  HIPHOP
   RAP
   SERTANEJO
   PAGODE
   AXE
   FORRO
+  SAMBA
+  GOSPEL
+  METAL
+  INDIE
+  ALTERNATIVO
+  BOSSA_NOVA
+  SOUL
+  RHYTHM_AND_BLUES
+  FOLK
+  PUNK
+  GOTICO
+  HARDCORE
+  GRUNGE
   ELETRONICA
   CLASSICA
   JAZZ

@@ -1,9 +1,9 @@
 import { type Authenticate } from '../../../domain/usecases/authenticate'
-import { GeneratePayloadSession } from '../../protocols/db/GeneratePayloadSession'
-import { SaveSessionRepository } from '../../protocols/db/GenerateSessionRepository'
+import { type GeneratePayloadSession } from '../../protocols/db/GeneratePayloadSession'
+import { type SaveSessionRepository } from '../../protocols/db/GenerateSessionRepository'
 import { type GetUserInfoRepository } from '../../protocols/db/GetUserInfoRepository'
-import { AddAccountRepository } from '../../protocols/db/add-account-repository'
-import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository'
+import { type AddAccountRepository } from '../../protocols/db/add-account-repository'
+import { type LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository'
 
 export class DbAuthenticate implements Authenticate {
   constructor (
@@ -16,12 +16,14 @@ export class DbAuthenticate implements Authenticate {
 
   async auth (params: Authenticate.Params): Promise<Authenticate.Result> {
     try {
+      console.log(params)
       const user = await this.getUserInfoRepository.load(params)
       console.log(user)
       if (!user) {
         throw new Error('User not found')
       }
       let account = await this.loadAccountByEmailRepository.loadByEmail(user.email)
+      const isFirstLogin = account === null
       if (!account) {
         account = await this.addAccountRepository.add({
           name: user.name,
@@ -40,7 +42,7 @@ export class DbAuthenticate implements Authenticate {
       })
       await this.saveSessionRepository.save({ userId: account.id, payload })
 
-      return { jwt: payload }
+      return { jwt: payload, isFirstLogin }
     } catch (error) {
       console.log(error)
       throw new Error('Failed to authenticate')
