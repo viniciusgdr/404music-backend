@@ -12,7 +12,7 @@ export namespace LoadPlayerPairProcessDownloadRepository {
     PATH: string
   }
   export interface Result {
-    stream: fs.ReadStream | internal.Readable
+    stream: fs.ReadStream | internal.Readable | NodeJS.ReadableStream
     size: number
   }
 }
