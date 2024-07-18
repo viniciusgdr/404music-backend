@@ -9,20 +9,11 @@ export class OAuthAuthorizeController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { code, platform } = httpRequest.query
-      const result = await this.authenticate.auth({ code })
-      switch (platform) {
-        case 'android':
-          return {
-            statusCode: 200,
-            body: result
-          }
-      }
-      httpRequest._extra?.res.redirect(`gdrmusic://oauth-callback?token=${encodeURIComponent(result.jwt)}`)
+      const { code, redirectUri } = httpRequest.query
+      const result = await this.authenticate.auth({ code, redirectUri })
       return {
         statusCode: 200,
-        body: null,
-        stream: true
+        body: result
       }
     } catch (error: Error | any) {
       console.log(error)

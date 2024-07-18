@@ -5,6 +5,7 @@ export interface GetUserInfoRepository {
 export namespace GetUserInfoRepository {
   export interface Params {
     code: string
+    redirectUri?: string
   }
 
   export type Result = {

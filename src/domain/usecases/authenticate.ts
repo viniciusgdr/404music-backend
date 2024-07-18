@@ -5,6 +5,7 @@ export interface Authenticate {
 export namespace Authenticate {
   export interface Params {
     code: string
+    redirectUri?: string
   }
 
   export interface Result {
