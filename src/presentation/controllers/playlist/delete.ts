@@ -10,10 +10,20 @@ export class DeletePlaylistController implements Controller {
 
   async handle (request: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!request.body.userId) {
+      const { userId } = request.additionalInfo
+      if (!userId) {
         return badRequest(new MissingParamError('userId'))
       }
-      const playlist = await this.deletePlaylist.delete(request.body)
+      const requiredFields = ['playlistId']
+      for (const field of requiredFields) {
+        if (!request.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
+      }
+      const playlist = await this.deletePlaylist.delete({
+        playlistId: request.body.playlistId,
+        userId
+      })
 
       return ok(playlist)
     } catch (error: any) {

@@ -10,15 +10,17 @@ export class GetPlaylistController implements Controller {
 
   async handle (request: HttpRequest): Promise<HttpResponse> {
     try {
-      const { playlistId } = request.body
-      const requiredFields = ['playlistId']
-      for (const field of requiredFields) {
-        if (!request.body[field]) {
-          return badRequest(new MissingParamError(field))
-        }
+      const { userId } = request.additionalInfo
+      if (!userId) {
+        return badRequest(new MissingParamError('userId'))
+      }
+      const { id } = request.params
+      if (!id) {
+        return badRequest(new MissingParamError('id'))
       }
       const playlist = await this.getPlaylist.getPlaylist({
-        playlistId
+        userId,
+        playlistId: id
       })
       return ok(playlist)
     } catch (error: any) {

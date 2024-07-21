@@ -8,8 +8,12 @@ export class ValidateOwnerPlaylistController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { userId, playlistId } = httpRequest.body
-      const requiredFields = ['userId', 'playlistId']
+      const { userId } = httpRequest.additionalInfo
+      if (!userId) {
+        return badRequest(new MissingParamError('userId'))
+      }
+      const { playlistId } = httpRequest.body
+      const requiredFields = ['playlistId']
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
           return badRequest(new MissingParamError(field))

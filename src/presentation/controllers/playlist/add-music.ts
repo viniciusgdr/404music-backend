@@ -10,8 +10,12 @@ export class AddMusicPlaylistController implements Controller {
 
   async handle (request: HttpRequest): Promise<HttpResponse> {
     try {
-      const { playlistId, musicId, userId } = request.body
-      const requiredFields = ['playlistId', 'musicId', 'userId']
+      const { userId } = request.additionalInfo
+      if (!userId) {
+        return badRequest(new MissingParamError('userId'))
+      }
+      const { playlistId, musicId } = request.body
+      const requiredFields = ['playlistId', 'musicId']
       for (const field of requiredFields) {
         if (!request.body[field]) {
           return badRequest(new MissingParamError(field))

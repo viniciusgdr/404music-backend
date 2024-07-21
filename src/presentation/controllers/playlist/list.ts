@@ -8,14 +8,12 @@ export class PlaylistListController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['id']
-      for (const field of requiredFields) {
-        if (!httpRequest.body[field]) {
-          return badRequest(new MissingParamError(field))
-        }
+      const { userId } = httpRequest.additionalInfo
+      if (!userId) {
+        return badRequest(new MissingParamError('userId'))
       }
       const musics = await this.playlistList.load({
-        id: httpRequest.body.id
+        id: userId
       })
       return ok(musics)
     } catch (error: any) {

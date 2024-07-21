@@ -5,10 +5,10 @@ import { type HttpRequest, type Controller, type HttpResponse } from '../../prot
 
 export class SessionController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const { userId } = httpRequest.additionalInfo
+    const { userId, apiKey } = httpRequest.additionalInfo
 
-    if (!userId) {
-      return badRequest(new MissingParamError('userId'))
+    if (!userId || !apiKey) {
+      return badRequest(new MissingParamError('userId or apiKey'))
     }
 
     const user = await prismaClient.user.findUnique({
@@ -28,6 +28,15 @@ export class SessionController implements Controller {
     if (!user) {
       return badRequest(new MissingParamError('user'))
     }
+
+    void prismaClient.session.update({
+      where: {
+        payload: apiKey
+      },
+      data: {
+        lastActivity: new Date()
+      }
+    })
 
     return ok({
       id: user.id,

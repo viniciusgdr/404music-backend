@@ -7,6 +7,10 @@ export class DbGetPlaylist implements GetPlaylist {
   ) {}
 
   async getPlaylist (params: GetPlaylist.Params): Promise<GetPlaylist.Result> {
-    return await this.loadPlaylistRepository.load(params.playlistId)
+    const playlist = await this.loadPlaylistRepository.load(params.playlistId)
+    if (!playlist || (playlist.userId !== params.userId && playlist.type === 'PRIVATE')) {
+      return null
+    }
+    return playlist
   }
 }

@@ -6,6 +6,7 @@ export interface GetPlaylist {
 
 export namespace GetPlaylist {
   export interface Params {
+    userId: string
     playlistId: string
   }
 
